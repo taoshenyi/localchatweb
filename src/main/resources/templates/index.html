@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Local ChatGPT</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .chat-box { max-width: 800px; margin: auto; }
+        .message { margin-bottom: 10px; }
+        .role-user { font-weight: bold; color: #2b7; }
+        .role-assistant { font-weight: bold; color: #29f; }
+        .role-system { font-weight: bold; color: #777; }
+    </style>
+</head>
+<body>
+<div class="chat-box">
+    <h1>Local ChatGPT</h1>
+    <form action="/chat" method="post">
+        <input type="text" name="message" style="width:70%"/>
+        <select name="model">
+            <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+            <option value="gpt-4">gpt-4</option>
+        </select>
+        <button type="submit">Send</button>
+    </form>
+    <form action="/upload" method="post" enctype="multipart/form-data" style="margin-top:10px;">
+        <input type="file" name="file"/>
+        <button type="submit">Upload File</button>
+    </form>
+    <div th:each="msg : ${messages}" class="message">
+        <span th:text="${msg.role}" th:class="${'role-' + msg.role}"></span>:
+        <span th:text="${msg.content}"></span>
+    </div>
+</div>
+</body>
+</html>
